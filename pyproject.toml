@@ -1,0 +1,11 @@
+[project]
+name = "to-do-list"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12.7"
+dependencies = [
+    "django>=5.1.7",
+    "psycopg[binary]>=3.2.6",
+    "pydantic-settings>=2.8.1",
+]
