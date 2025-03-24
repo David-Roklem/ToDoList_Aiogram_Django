@@ -9,7 +9,7 @@ class UserAdmin(admin.ModelAdmin):
 
 
 class TaskAdmin(admin.ModelAdmin):
-    list_display = ["category", "status", "title", "description", "due_date", "user"]
+    list_display = ["category", "status", "title", "description", "created_at", "due_date", "user"]
     search_fields = ["title"]
     list_filter = ("category", "status", "user")
     list_per_page = 10

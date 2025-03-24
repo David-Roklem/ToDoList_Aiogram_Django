@@ -2,11 +2,11 @@ from django.db import models
 
 
 class User(models.Model):
+    telegram_id = models.BigIntegerField(primary_key=True)
     name = models.CharField(max_length=50)
-    telegram_id = models.BigIntegerField()
 
     def __str__(self):
-        return self.name
+        return f"({self.name}, {self.telegram_id})"
 
 
 class Category(models.Model):
@@ -28,6 +28,7 @@ class Task(models.Model):
     status = models.CharField(choices=TaskStatus, default=TaskStatus.IN_PROGRESS)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     description = models.TextField(null=True, blank=True)
+    created_at = models.DateTimeField(auto_now=True)
     due_date = models.DateTimeField()
 
     def __str__(self):
