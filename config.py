@@ -15,6 +15,8 @@ class Settings(BaseSettings):
     POSTGRES_PORT: str
     POSTGRES_HOST: str
 
+    BACKEND_SERVER_ADDRESS: str
+
     DB_URL: str = Field('', validation_alias='DB_URL')
 
     def __init__(self, **data):
