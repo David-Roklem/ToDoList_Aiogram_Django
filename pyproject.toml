@@ -5,8 +5,10 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.12.7"
 dependencies = [
+    "aiogram-dialog>=2.3.1",
     "django>=5.1.7",
     "djangorestframework>=3.15.2",
+    "httpx>=0.28.1",
     "psycopg[binary]>=3.2.6",
     "pydantic-settings>=2.8.1",
 ]
