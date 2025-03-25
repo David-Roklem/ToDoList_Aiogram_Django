@@ -26,4 +26,6 @@ urlpatterns = [
     path('user-tasks/<int:telegram_id>', views.get_user_tasks, name='get_user_tasks'),
     path('user-tasks/create', views.create_user_task, name='create_user_task'),
     path('user-tasks/detail/<int:pk>', views.user_task_detail, name='user_task_detail'),
+    path('categories/', views.get_categories, name='get_categories'),
+    path('categories/create', views.create_category, name='create_category'),
 ]

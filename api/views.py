@@ -100,3 +100,21 @@ def user_task_detail(request, pk):
     elif request.method == "DELETE":
         task.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+@api_view(["GET"])
+def get_categories(request):
+    """Выводит все существующие категории задач"""
+    tasks = Category.objects.all()
+    serializer = CategorySerializer(tasks, many=True)
+    return Response(serializer.data)
+
+
+@api_view(["POST"])
+def create_category(request):
+    """Создает новую категорию задач"""
+    serializer = CategorySerializer(data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
