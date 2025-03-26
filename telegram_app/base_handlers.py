@@ -10,7 +10,7 @@ router = Router()
 
 @router.message(CommandStart())
 async def command_start_process(message: Message, dialog_manager: DialogManager):
-    await dialog_manager.start(state=fsm_states.TaskMenu.MAIN, mode=StartMode.RESET_STACK)
+    await dialog_manager.start(state=fsm_states.StartMenu.MAIN, mode=StartMode.RESET_STACK)
 
 
 @router.message(Command(commands='help'))
