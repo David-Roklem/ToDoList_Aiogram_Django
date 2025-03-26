@@ -50,7 +50,7 @@ def user_detail(request, telegram_id):
 @api_view(["GET"])
 def get_user_tasks(request, telegram_id):
     """Выводит список задач конкретного пользователя"""
-    tasks = Task.objects.filter(user__telegram_id=telegram_id)
+    tasks = Task.objects.select_related('category').filter(user__telegram_id=telegram_id)
     serializer = TaskSerializer(tasks, many=True)
     return Response(serializer.data)
 
@@ -58,13 +58,6 @@ def get_user_tasks(request, telegram_id):
 @api_view(["POST"])
 def create_user_task(request):
     """Создает новую задачу для пользователя"""
-    a = {
-        "title": "SOme task",
-        "category": 2,
-        "status": "INP",
-        "user": 1231023012,
-        "due_date": "2024-01-01"
-    }
     telegram_id = request.data["user"]
     try:
         user = User.objects.get(telegram_id=telegram_id)
