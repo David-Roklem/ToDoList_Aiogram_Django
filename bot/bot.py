@@ -3,7 +3,6 @@ import logging
 from aiogram import Dispatcher, Bot
 from aiogram.client.default import DefaultBotProperties
 from aiogram.enums import ParseMode
-from dialogs import test_dialog
 from dialogs import start_menu, create_task, users_tasks
 
 from config import settings
@@ -32,7 +31,6 @@ async def main():
         start_menu.start_menu_dialog,
         create_task.task_creation_dialog,
         users_tasks.user_tasks_dialog,
-        test_dialog.start_dialog,
     )
     setup_dialogs(dp)
 
