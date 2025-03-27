@@ -50,7 +50,7 @@ def user_detail(request, telegram_id):
 @api_view(["GET"])
 def get_user_tasks(request, telegram_id):
     """Выводит список задач конкретного пользователя"""
-    tasks = Task.objects.select_related('category').filter(user__telegram_id=telegram_id)
+    tasks = Task.objects.select_related("category").filter(user__telegram_id=telegram_id)
     serializer = TaskSerializer(tasks, many=True)
     return Response(serializer.data)
 
