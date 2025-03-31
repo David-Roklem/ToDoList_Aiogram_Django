@@ -3,6 +3,8 @@ import logging
 from aiogram import Dispatcher, Bot
 from aiogram.client.default import DefaultBotProperties
 from aiogram.enums import ParseMode
+from aiogram.filters import ExceptionTypeFilter
+from aiogram_dialog.api.exceptions import UnknownIntent
 from dialogs import start_menu, create_task, users_tasks
 
 from config import settings
@@ -26,6 +28,10 @@ async def main():
     dp = Dispatcher()
 
     dp.startup.register(set_menu_button)
+    dp.errors.register(
+        base_handlers.on_unknown_intent,
+        ExceptionTypeFilter(UnknownIntent),
+    )
     dp.include_router(base_handlers.router)
     dp.include_routers(
         start_menu.start_menu_dialog,
