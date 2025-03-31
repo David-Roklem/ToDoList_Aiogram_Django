@@ -1,0 +1,7 @@
+#!/bin/sh
+
+# Миграции БД
+python manage.py migrate
+
+# Запускаем джанго-сервер
+exec python manage.py runserver 0.0.0.0:8000
