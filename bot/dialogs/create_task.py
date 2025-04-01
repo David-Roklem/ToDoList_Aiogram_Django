@@ -98,11 +98,9 @@ async def create_task(callback: CallbackQuery, button: Button, dialog_manager: D
     data["user"] = user_id
     if not check_if_user_exists(dialog_manager):
         httpx.post(f"{base_url}users/create", json={"telegram_id": user_id, "name": full_name})
-    return httpx.post(f"{base_url}user-tasks/create", json=data)
-
-
-async def close_dialog(callback: CallbackQuery, button: Button, dialog_manager: DialogManager):
-    await dialog_manager.start(StartMenu.MAIN, mode=StartMode.RESET)
+    httpx.post(f"{base_url}user-tasks/create", json=data)
+    await dialog_manager.done()
+    await callback.answer(text_templates.TASK_CREATED_TEXT, show_alert=True)
 
 
 task_creation_dialog = Dialog(
@@ -173,6 +171,5 @@ task_creation_dialog = Dialog(
         state=TaskCreation.result,
         getter=created_task_getter,
         parse_mode="html",
-        on_process_result=close_dialog,
     ),
 )
