@@ -19,7 +19,7 @@ async def process_help_command(message: Message):
     await message.answer(text=text_templates.HELP_CMD)
 
 
-async def on_unknown_intent(event, dialog_manager: DialogManager):
+async def on_errors(event, dialog_manager: DialogManager):
     logging.error("Restarting dialog: %s", event.exception)
     await dialog_manager.start(
         fsm_states.StartMenu.MAIN, mode=StartMode.RESET_STACK, show_mode=ShowMode.SEND,

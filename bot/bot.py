@@ -4,7 +4,7 @@ from aiogram import Dispatcher, Bot
 from aiogram.client.default import DefaultBotProperties
 from aiogram.enums import ParseMode
 from aiogram.filters import ExceptionTypeFilter
-from aiogram_dialog.api.exceptions import UnknownIntent
+from aiogram_dialog.api.exceptions import UnknownIntent, OutdatedIntent, UnknownState
 from dialogs import start_menu, create_task, users_tasks
 
 from config import settings
@@ -29,8 +29,8 @@ async def main():
 
     dp.startup.register(set_menu_button)
     dp.errors.register(
-        base_handlers.on_unknown_intent,
-        ExceptionTypeFilter(UnknownIntent),
+        base_handlers.on_errors,
+        ExceptionTypeFilter(UnknownIntent, OutdatedIntent, UnknownState),
     )
     dp.include_router(base_handlers.router)
     dp.include_routers(
