@@ -6,3 +6,9 @@ def extract_elements(value: str) -> tuple[str, int]:
     name = parsed_tuple[0]
     number = int(parsed_tuple[1])
     return name, number
+
+
+def title_check(text: str) -> str:
+    if len(text) <= 50:
+        return text
+    raise ValueError

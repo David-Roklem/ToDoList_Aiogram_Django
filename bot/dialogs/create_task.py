@@ -12,7 +12,7 @@ from aiogram_dialog.widgets.kbd import Next, Back, Select, Group, Button
 from aiogram_dialog.widgets.text import Const, Jinja, Format
 import httpx
 from dialogs.common import MAIN_MENU_BUTTON
-from utils import extract_elements
+from utils import extract_elements, title_check
 import text_templates
 from fsm_states import TaskCreation, StartMenu
 from config import settings
@@ -44,12 +44,6 @@ async def save_category_data(callback: CallbackQuery, button: Button, dialog_man
     dialog_manager.dialog_data["category_name"] = category_name
     dialog_manager.dialog_data["category"] = category
     await dialog_manager.switch_to(TaskCreation.result)
-
-
-def title_check(text: str) -> str:
-    if len(text) <= 50:
-        return text
-    raise ValueError
 
 
 async def error_title_handler(
