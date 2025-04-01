@@ -82,11 +82,22 @@ async def created_task_getter(dialog_manager: DialogManager, **kwargs):
     }
 
 
+def check_if_user_exists(dialog_manager: DialogManager):
+    # TODO Закэшировать логику проверки юзера в БД
+    base_url = settings.BACKEND_SERVER_ADDRESS
+    telegram_id = dialog_manager.event.from_user.id
+    user = httpx.get(f"{base_url}users/user-detail/{telegram_id}")
+    return True if user.status_code == 200 else False
+
+
 async def create_task(callback: CallbackQuery, button: Button, dialog_manager: DialogManager):
     base_url = settings.BACKEND_SERVER_ADDRESS
     user_id = dialog_manager.event.from_user.id
+    full_name = dialog_manager.event.from_user.full_name
     data = dialog_manager.dialog_data
     data["user"] = user_id
+    if not check_if_user_exists(dialog_manager):
+        httpx.post(f"{base_url}users/create", json={"telegram_id": user_id, "name": full_name})
     return httpx.post(f"{base_url}user-tasks/create", json=data)
 
 
