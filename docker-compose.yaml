@@ -12,6 +12,7 @@ services:
       - pg_data:/var/lib/postgresql/data
     networks:
       - dbnet
+      - celery
 
   api:
     build:
@@ -23,6 +24,7 @@ services:
       - "8000:8000"
     networks:
       - backend
+      - celery
       - dbnet
     depends_on:
       - "postgres"
@@ -38,6 +40,47 @@ services:
     depends_on:
       - "api"
 
+  redis:
+    image: redis:alpine
+    ports:
+      - "6379:6379"
+    networks:
+      - backend
+      - celery
+    env_file: ".env"
+    volumes:
+      - ./storage/redis/data:/data
+
+  celery:
+    build:
+      context: .
+      dockerfile: Dockerfile.api  # Используем тот же Dockerfile, что и для API
+    command: celery -A ToDoList_project worker --loglevel=debug
+    networks:
+      - celery
+      - dbnet
+    volumes:
+      - .:/app
+    environment:
+      - DJANGO_SETTINGS_MODULE=ToDoList_project.settings
+    depends_on:
+      - redis
+
+  celery_beat:
+    build:
+      context: .
+      dockerfile: Dockerfile.api  # Используем тот же Dockerfile, что и для API
+    command: celery -A ToDoList_project beat --loglevel=debug  # celery -A ToDoList_project -b redis://localhost:6379/0 beat --loglevel=debug
+    networks:
+      - celery
+      - dbnet
+    volumes:
+      - .:/app
+    environment:
+      - DJANGO_SETTINGS_MODULE=ToDoList_project.settings
+    depends_on:
+      - redis
+
 volumes:
   pg_data:
 
@@ -45,4 +88,6 @@ networks:
   dbnet:
     driver: bridge
   backend:
+    driver: bridge
+  celery:
     driver: bridge
