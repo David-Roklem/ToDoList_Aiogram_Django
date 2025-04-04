@@ -1,13 +1,10 @@
 import asyncio
 import logging
-from aiogram import Dispatcher, Bot
-from aiogram.client.default import DefaultBotProperties
-from aiogram.enums import ParseMode
 from aiogram.filters import ExceptionTypeFilter
 from aiogram_dialog.api.exceptions import UnknownIntent, OutdatedIntent, UnknownState
 from dialogs import start_menu, create_task, users_tasks
 
-from config import settings
+from config import bot, dp
 import base_handlers
 from keyboards_menu import set_menu_button
 from aiogram_dialog import setup_dialogs
@@ -23,9 +20,6 @@ async def main():
                "[%(asctime)s] - %(name)s - %(message)s")
 
     logger.info("Starting bot")
-
-    bot = Bot(settings.bot_token, default=DefaultBotProperties(parse_mode=ParseMode.HTML))
-    dp = Dispatcher()
 
     dp.startup.register(set_menu_button)
     dp.errors.register(
