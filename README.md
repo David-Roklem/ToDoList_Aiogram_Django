@@ -1,5 +1,5 @@
 # Inroduction
-Телеграм-бот, реализующий логику менеджера задач. Стек: Django, DRF, Aiogram-dialog, PostgreSQL, Docker
+Телеграм-бот, реализующий логику менеджера задач. Стек: Django, DRF, Aiogram-dialog, PostgreSQL, Docker, Celery, Redis
 
 ## Getting Started
 Склонируйте данный репозиторий командой:

@@ -4,7 +4,6 @@ ENV PYTHONUNBUFFERED 1
 WORKDIR /app
 COPY requirements.txt .
 RUN pip install --no-cache -r /app/requirements.txt
-# ENV DJANGO_SETTINGS_MODULE=ToDoList_project.settings
 COPY api /app/api
 COPY ToDoList_project /app/ToDoList_project
 COPY manage.py /app/
